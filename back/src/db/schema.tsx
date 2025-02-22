@@ -1,8 +1,10 @@
-import { integer, pgTable, varchar } from "drizzle-orm/pg-core";
+import { integer, numeric, pgTable, serial, text, varchar } from "drizzle-orm/pg-core";
 
 export const productsTable = pgTable("products", {
-  id: integer().primaryKey().generatedAlwaysAsIdentity(),
-  name: varchar({ length: 255 }).notNull(),
-  age: integer().notNull(),
-  email: varchar({ length: 255 }).notNull().unique(),
+  id: serial("id").primaryKey(),
+  name: varchar("name", { length: 255 }).notNull(),
+  description: text("description"),
+  price: numeric("price", { precision: 10, scale: 2 }).notNull(),
+  stock: integer("stock").notNull().default(0),
+  image: varchar("image", { length: 500 }),
 });
