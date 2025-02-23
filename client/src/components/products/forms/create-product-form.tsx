@@ -23,6 +23,7 @@ export function CreateProductForm() {
       description: formData.get('description') as string,
       price: Number(formData.get('price')),
       stock: Number(formData.get('stock')),
+      image: formData.get('image') as string,
     }
 
     createProduct(productData, {
@@ -68,6 +69,10 @@ export function CreateProductForm() {
             min="0" 
             required 
           />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="image">Image</Label>
+          <Input id="image" name="image" />
         </div>
         <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? 'Création...' : 'Créer le produit'}
