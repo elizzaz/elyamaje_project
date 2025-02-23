@@ -7,6 +7,11 @@ import { ViewProductButton } from "@/components/products/buttons/view-product-bu
 import { EditProductButton } from "@/components/products/buttons/edit-product-button"
 import { DeleteProductButton } from "@/components/products/buttons/delete-product-button"
 
+/**
+ * Table listant tous les produits
+ * @component
+ * @returns {JSX.Element} Table avec la liste des produits et leurs actions
+ */
 export function ProductsTable() {
   const { data: products, isLoading, error } = useProducts()
 

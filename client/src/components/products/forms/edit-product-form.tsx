@@ -13,6 +13,13 @@ interface EditProductFormProps {
   productId: number
 }
 
+/**
+ * Formulaire d'édition d'un produit
+ * @component
+ * @param {Object} props - Props du composant
+ * @param {number} props.productId - ID du produit à modifier
+ * @returns {JSX.Element} Formulaire pré-rempli avec les données du produit
+ */
 export function EditProductForm({ productId }: EditProductFormProps) {
   const router = useRouter()
   const { data: product, isLoading: isLoadingProduct } = useProduct(productId)

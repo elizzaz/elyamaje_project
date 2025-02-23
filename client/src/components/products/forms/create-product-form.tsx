@@ -10,6 +10,11 @@ import { toast } from 'sonner'
 import type { CreateProductInput } from '@/types/product'
 import { ApiError } from '@/types/api'
 
+/**
+ * Formulaire de création d'un produit
+ * @component
+ * @returns {JSX.Element} Formulaire avec les champs nécessaires
+ */
 export function CreateProductForm() {
   const router = useRouter()
   const { mutate: createProduct, isPending } = useCreateProduct()

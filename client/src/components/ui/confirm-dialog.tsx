@@ -23,6 +23,19 @@ interface ConfirmDialogProps {
   children: React.ReactNode
 }
 
+/**
+ * Dialogue de confirmation personnalisable
+ * @component
+ * @param {Object} props - Props du composant
+ * @param {string} props.title - Titre du dialogue
+ * @param {string} props.description - Description de l'action
+ * @param {string} [props.cancelText="Annuler"] - Texte du bouton d'annulation
+ * @param {string} [props.confirmText="Confirmer"] - Texte du bouton de confirmation
+ * @param {() => void} props.onConfirm - Fonction appelée lors de la confirmation
+ * @param {ButtonProps["variant"]} [props.variant="default"] - Variante du bouton de confirmation
+ * @param {ReactNode} props.children - Élément déclencheur du dialogue
+ * @returns {JSX.Element} Dialogue de confirmation
+ */
 export function ConfirmDialog({
   title,
   description,

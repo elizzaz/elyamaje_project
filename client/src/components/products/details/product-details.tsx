@@ -8,6 +8,13 @@ interface ProductDetailsProps {
   productId: number
 }
 
+/**
+ * Affiche les détails d'un produit
+ * @component
+ * @param {Object} props - Props du composant
+ * @param {number} props.productId - ID du produit à afficher
+ * @returns {JSX.Element} Card avec les détails du produit
+ */
 export function ProductDetails({ productId }: ProductDetailsProps) {
   const { data: product, isLoading, error } = useProduct(productId)
 
