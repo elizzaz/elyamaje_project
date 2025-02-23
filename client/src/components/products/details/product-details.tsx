@@ -30,18 +30,8 @@ export function ProductDetails({ productId }: ProductDetailsProps) {
     )
   }
 
-  if (error) {
-    return (
-      <Card className="p-6">
-        <div className="text-red-500">
-          {error.message || 'Une erreur est survenue'}
-        </div>
-      </Card>
-    )
-  }
-
-  if (!product) {
-    return notFound()
+  if (error || !product) {
+    notFound()
   }
 
   return (

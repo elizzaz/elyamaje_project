@@ -1,8 +1,9 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, notFound } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
 import { useProduct, useUpdateProduct } from '@/hooks/useProducts'
@@ -22,7 +23,7 @@ interface EditProductFormProps {
  */
 export function EditProductForm({ productId }: EditProductFormProps) {
   const router = useRouter()
-  const { data: product, isLoading: isLoadingProduct } = useProduct(productId)
+  const { data: product, isLoading: isLoadingProduct, error } = useProduct(productId)
   const { mutate: updateProduct, isPending: isUpdating } = useUpdateProduct()
 
   if (isLoadingProduct) {
@@ -36,12 +37,8 @@ export function EditProductForm({ productId }: EditProductFormProps) {
     )
   }
 
-  if (!product) {
-    return (
-      <Card className="p-6">
-        <div className="text-red-500">Produit non trouvé</div>
-      </Card>
-    )
+  if (error || !product) {
+    notFound()
   }
 
   async function onSubmit(event: React.FormEvent<HTMLFormElement>) {
@@ -53,6 +50,7 @@ export function EditProductForm({ productId }: EditProductFormProps) {
       description: formData.get('description') as string,
       price: Number(formData.get('price')),
       stock: Number(formData.get('stock')),
+      image: formData.get('image') as string,
     }
 
     updateProduct(
@@ -74,7 +72,9 @@ export function EditProductForm({ productId }: EditProductFormProps) {
     <Card className="p-6">
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="name">Nom</Label>
+          <Label htmlFor="name">
+            Nom <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="name" 
             name="name" 
@@ -84,14 +84,18 @@ export function EditProductForm({ productId }: EditProductFormProps) {
         </div>
         <div className="space-y-2">
           <Label htmlFor="description">Description</Label>
-          <Input 
+          <Textarea 
             id="description" 
-            name="description" 
+            name="description"
             defaultValue={product.description || ''}
+            placeholder="Description du produit..."
+            className="min-h-[100px]"
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="price">Prix</Label>
+          <Label htmlFor="price">
+            Prix <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="price" 
             name="price" 
@@ -103,7 +107,9 @@ export function EditProductForm({ productId }: EditProductFormProps) {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="stock">Stock</Label>
+          <Label htmlFor="stock">
+            Stock <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="stock" 
             name="stock" 
@@ -111,6 +117,16 @@ export function EditProductForm({ productId }: EditProductFormProps) {
             min="0" 
             defaultValue={product.stock}
             required 
+          />
+        </div>
+        <div className="space-y-2">
+          <Label htmlFor="image">URL de l'image</Label>
+          <Input 
+            id="image" 
+            name="image" 
+            type="url"
+            defaultValue={product.image}
+            placeholder="https://example.com/image.jpg"
           />
         </div>
         <Button type="submit" className="w-full" disabled={isUpdating}>

@@ -1,4 +1,5 @@
 import { Metadata } from 'next'
+import Link from 'next/link'
 
 export const metadata: Metadata = {
   title: 'Dashboard | Product Management',
@@ -14,7 +15,12 @@ export default function DashboardLayout({
     <div className="flex min-h-screen flex-col space-y-6">
       <header className="sticky top-0 z-40 border-b bg-background">
         <div className="container flex h-16 items-center justify-between py-4">
-          <h1 className="text-lg font-semibold">Product Dashboard</h1>
+          <Link 
+            href="/dashboard" 
+            className="text-lg font-semibold hover:text-muted-foreground transition-colors px-4 md:px-8"
+          >
+            Product Dashboard
+          </Link>
         </div>
       </header>
       <div className="container grid flex-1 gap-12 md:grid-cols-[200px_1fr]">

@@ -30,7 +30,7 @@ export function ProductsTable() {
       <Card className="mt-6">
         <div className="p-6">
           <h3 className="text-lg font-medium text-red-500">
-            Erreur lors du chargement des produits
+            {error.message || 'Erreur lors du chargement des produits'}
           </h3>
         </div>
       </Card>
@@ -48,7 +48,7 @@ export function ProductsTable() {
             <TableHead>Nom</TableHead>
             <TableHead>Prix</TableHead>
             <TableHead>Stock</TableHead>
-            <TableHead>Actions</TableHead>
+            <TableHead className="text-right">Actions</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -57,13 +57,15 @@ export function ProductsTable() {
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.price}€</TableCell>
               <TableCell>{product.stock}</TableCell>
-              <TableCell className="space-x-2">
-                <ViewProductButton productId={product.id} />
-                <EditProductButton productId={product.id} />
-                <DeleteProductButton 
-                  productId={product.id} 
-                  productName={product.name}
-                />
+              <TableCell className="text-right">
+                <div className="flex justify-end gap-2">
+                  <ViewProductButton productId={product.id} />
+                  <EditProductButton productId={product.id} />
+                  <DeleteProductButton 
+                    productId={product.id}
+                    productName={product.name}
+                  />
+                </div>
               </TableCell>
             </TableRow>
           ))}

@@ -3,6 +3,7 @@
 import { useRouter } from 'next/navigation'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 import { Card } from "@/components/ui/card"
 import { useCreateProduct } from '@/hooks/useProducts'
@@ -47,15 +48,24 @@ export function CreateProductForm() {
     <Card className="p-6">
       <form onSubmit={onSubmit} className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="name">Nom</Label>
+          <Label htmlFor="name">
+            Nom <span className="text-red-500">*</span>
+          </Label>
           <Input id="name" name="name" required />
         </div>
         <div className="space-y-2">
           <Label htmlFor="description">Description</Label>
-          <Input id="description" name="description" />
+          <Textarea 
+            id="description" 
+            name="description"
+            placeholder="Description du produit..."
+            className="min-h-[100px]"
+          />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="price">Prix</Label>
+          <Label htmlFor="price">
+            Prix <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="price" 
             name="price" 
@@ -66,7 +76,9 @@ export function CreateProductForm() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="stock">Stock</Label>
+          <Label htmlFor="stock">
+            Stock <span className="text-red-500">*</span>
+          </Label>
           <Input 
             id="stock" 
             name="stock" 
@@ -76,8 +88,13 @@ export function CreateProductForm() {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="image">Image</Label>
-          <Input id="image" name="image" />
+          <Label htmlFor="image">URL de l'image</Label>
+          <Input 
+            id="image" 
+            name="image" 
+            type="url"
+            placeholder="https://example.com/image.jpg"
+          />
         </div>
         <Button type="submit" className="w-full" disabled={isPending}>
           {isPending ? 'Création...' : 'Créer le produit'}
