@@ -1,68 +1,120 @@
-# API de Gestion de Produits
+# Application de Gestion de Produits
 
-Une API RESTful robuste pour la gestion de produits, construite avec des technologies modernes et des pratiques de développement solides.
+Une application full-stack de gestion de produits avec une API RESTful robuste et une interface utilisateur moderne.
 
 ## 🚀 Fonctionnalités
+
+### Backend
 
 - CRUD complet pour les produits
 - Validation des données avec Zod
 - Gestion des erreurs centralisée
 - Logging des opérations
 - Gestion des prix en centimes (stockage) avec conversion en dollars (API)
-- Architecture en couches (Controllers, Services, Database)
-- Typage fort avec TypeScript
+- Architecture en couches
+
+### Frontend
+
+- Interface utilisateur moderne avec Shadcn/ui et Tailwind CSS
+- Gestion d'état côté client avec React Query
+- Pagination des produits
+- Formulaires avec validation
+- Gestion des erreurs
+- Feedback utilisateur avec toasts
+- Navigation fluide avec Next.js App Router
 
 ## 🛠 Technologies
 
-- **Node.js** - Environnement d'exécution
-- **TypeScript** - Superset JavaScript typé
-- **Express.js** - Framework web
-- **PostgreSQL** - Base de données relationnelle
-- **Drizzle ORM** - ORM moderne pour TypeScript
-- **Zod** - Validation des données
-- **cors** - Gestion des CORS
+### Backend
+
+- Node.js & TypeScript
+- Express.js
+- PostgreSQL
+- Drizzle ORM
+- Zod
+
+### Frontend
+- Next.js 14
+- React Query (TanStack Query)
+- Tailwind CSS
+- Shadcn/ui
+- TypeScript
+
 
 ## 📦 Installation
 
-1. **Cloner le repository**
-bash
-git clone [url-du-repo]
+### 1. Prérequis
+
+- Node.js 18+
+- PostgreSQL 15+
+- pnpm (recommandé) ou npm
+
+
+### 2. Cloner le repository
+
+```bash
+git clone <url-du-repo>
+cd <nom-du-projet>
+```
+
+### 3. Installation des dépendances:
+
+```bash
+pnpm install-all
+```
+
+### 4. Configurer la base de données:
+
+```bash
 cd back
+touch .env
+```
 
-2. **Installer les dépendances**
-bash
-npm install
+Ajouter l'url postgres dans le fichier .env:
 
-3. **Configurer l'environnement**
-bash
-cp .env.example .env
-
-4. **Configurer la base de données**
-bash
-npm run migrate
-npm run seed
-
-## ⚙️ Configuration
-
-Créez un fichier `.env` à la racine du projet avec les variables suivantes :
-
+```bash
 DATABASE_URL=postgres://user:password@localhost:5432/db_name
 PORT=3000
+```
+
+Puis lancer la commande pour initialiser la base de données:
+
+```bash
+pnpm init-db
+```
+
+### 5. Configurer l'url d'api côté frontend :
+
+
+```bash
+cd client
+touch .env
+```
+
+Ajouter l'url d'api dans le fichier .env:
+
+```bash 
+NEXT_PUBLIC_API_URL=http://localhost:3000
+```
 
 ## 🚀 Scripts Disponibles
 
+### Backend
+
 ```bash
-# Développement
-npm run dev         # Lance le serveur de développement
+pnpm dev # Lance le serveur de développement
+pnpm build # Compile le TypeScript
+pnpm start # Lance le serveur de production
+pnpm migrate # Applique les migrations
+```
 
-# Production
-npm run build      # Compile le TypeScript
-npm start         # Lance le serveur de production
+### Frontend
 
-# Base de données
-npm run migrate   # Applique les migrations
-npm run generate  # Génère les migrations
-npm run seed      # Peuple la base de données
+```bash 
+pnpm dev # Lance le serveur Next.js
+pnpm build # Compile l'application
+pnpm start # Lance le client
+pnpm lint # Vérifie le code
 ```
 
 ## 📝 API Endpoints
@@ -71,84 +123,55 @@ npm run seed      # Peuple la base de données
 
 | Méthode | Endpoint | Description |
 |---------|----------|-------------|
-| GET | `/products` | Liste tous les produits |
-| GET | `/products/:id` | Récupère un produit spécifique |
-| POST | `/products` | Crée un nouveau produit |
+| GET | `/products` | Liste paginée des produits |
+| GET | `/products/:id` | Récupère un produit |
+| POST | `/products` | Crée un produit |
 | PUT | `/products/:id` | Met à jour un produit |
 | DELETE | `/products/:id` | Supprime un produit |
 
-### Format des Données
+La collection postman pour les endpoints est disponible dans le fichier `postman.collection.json`.
 
-#### Création de Produit (POST)
+### Format des données attendues
+
+#### Création/Mise à jour de Produit
+
 ```json
 {
   "name": "string (2-255 caractères)",
   "description": "string (min 10 caractères, optionnel)",
   "price": "number (> 0, max 999999.99)",
   "stock": "number (>= 0)",
-  "image": "string (URL, optionnel)"
+  "image":  "string (URL, optionnel)"
 }
 ```
 
-#### Réponse Produit
-```json
-{
-  "id": "number",
-  "name": "string",
-  "description": "string?",
-  "price": "number (en dollars)",
-  "stock": "number",
-  "image": "string?"
-}
-```
 
-## 💡 Architecture
+## 🏗 Structure du projet
 
 ```
-src/
-├── controllers/    # Gestion des requêtes HTTP
-├── services/      # Logique métier
-├── db/            # Configuration et schémas DB
-├── validation/    # Schémas de validation
-├── utils/         # Utilitaires
-└── routes/        # Définition des routes
+├── back/ # Backend Express.js
+│ ├── src/
+│ │ ├── controllers/ # Contrôleurs
+│ │ ├── services/ # Services
+│ │ ├── validation/ # Schémas Zod
+│ │ └── routes/ # Routes API
+│ └── prisma/ # Schémas et migrations
+└── client/ # Frontend Next.js
+│ ├── src/
+│ │ ├── app/ # Pages et routes
+│ │ ├── components/ # Composants React
+│ │ ├── hooks/ # Hooks personnalisés
+│ │ └── lib/ # Utilitaires
+│ └── public/ # Assets statiques
+└── package.json # Scripts globaux
+└── README.md
 ```
 
-## 🔐 Gestion des Prix
-
-- Les prix sont exposés en dollars dans l'API
-- Stockés en centimes dans la base de données
-- Conversion automatique via les utilitaires `toCents` et `toDollars`
-
-## ⚠️ Gestion des Erreurs
-
-L'API utilise un système centralisé de gestion des erreurs avec des codes HTTP appropriés :
-
-- `400` - Requête invalide
-- `404` - Ressource non trouvée
-- `500` - Erreur serveur
-
-## 📊 Logging
-
-Logging automatique des opérations importantes :
-- Création de produits
-- Modifications
-- Erreurs
-- Requêtes importantes
 
 
-## 🔍 Validation
+## 💡 Axes d'améliorations possibles
 
-La validation des données est effectuée au niveau du service avec Zod :
-- Validation des types
-- Contraintes sur les champs
-- Messages d'erreur personnalisés
-
-## 📚 Bonnes Pratiques
-
-- Architecture en couches
-- Validation centralisée
-- Gestion cohérente des erreurs
-- Typage fort
-- Logging structuré
-- Conversion des prix centralisée
+- Ajout de tests unitaires
+- Messages d'erreurs par champs dans les formulaires
+- Ajout d'un système d'authentification
+- ...

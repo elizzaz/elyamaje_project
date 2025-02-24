@@ -1,6 +1,5 @@
 'use client'
 
-import { useState } from "react"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Card } from "@/components/ui/card"
 import { useProducts } from "@/hooks/useProducts"
@@ -14,6 +13,7 @@ import {
   PaginationNext, 
   PaginationPrevious 
 } from "@/components/ui/pagination"
+import { useRouter } from "next/navigation"
 
 const ITEMS_PER_PAGE = 10
 
@@ -22,9 +22,13 @@ const ITEMS_PER_PAGE = 10
  * @component
  * @returns {JSX.Element} Table avec la liste des produits et leurs actions
  */
-export function ProductsTable() {
-  const [currentPage, setCurrentPage] = useState(1)
+export function ProductsTable({ currentPage }: { currentPage: number }) {
   const { data, isLoading, error } = useProducts(currentPage, ITEMS_PER_PAGE)
+  const { replace } = useRouter();
+
+  const updateCurrentPage = (page: number) => {
+    replace(`/dashboard?page=${page}`)
+  }
 
   if (isLoading) {
     return (
@@ -95,7 +99,7 @@ export function ProductsTable() {
                   href="#"
                   onClick={(e) => {
                     e.preventDefault()
-                    if (currentPage > 1) setCurrentPage(currentPage - 1)
+                    if (currentPage > 1) updateCurrentPage(currentPage - 1)
                   }}
                   aria-disabled={currentPage <= 1}
                 />
@@ -111,7 +115,7 @@ export function ProductsTable() {
                   onClick={(e) => {
                     e.preventDefault()
                     if (currentPage < data.metadata.totalPages) {
-                      setCurrentPage(currentPage + 1)
+                      updateCurrentPage(currentPage + 1)
                     }
                   }}
                   aria-disabled={currentPage >= data.metadata.totalPages}

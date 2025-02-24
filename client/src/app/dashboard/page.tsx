@@ -7,11 +7,18 @@ export const metadata: Metadata = {
   description: "Vue d'ensemble des produits",
 }
 
-export default function DashboardPage() {
+export default async function DashboardPage(props: {
+  searchParams?: Promise<{
+    page?: string;
+  }>;
+}) {
+  const searchParams = await props.searchParams;
+  const currentPage = Number(searchParams?.page) || 1;
+
   return (
     <div className="flex flex-col gap-6">
       <Header title="Vue d'ensemble" />
-      <ProductsTable />
+      <ProductsTable currentPage={currentPage} />
     </div>
   )
 } 
