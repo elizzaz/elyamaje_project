@@ -15,5 +15,5 @@ export const productsTable = pgTable("products", {
   description: text("description"),
   price: integer("price").notNull(), // Stored in cents
   stock: integer("stock").notNull().default(0),
-  image: varchar("image", { length: 500 }),
+  image: varchar("image", { length: 2048 }),
 });

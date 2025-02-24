@@ -9,8 +9,7 @@
     "start": "node dist/server.js",
     "seed": "tsx src/db/seed.ts",
     "migrate": "drizzle-kit push",
-    "generate": "drizzle-kit generate",
-    "convert-prices": "tsx src/db/migrations/convert_prices.ts"
+    "generate": "drizzle-kit generate"
   },
   "keywords": [],
   "author": "",
@@ -23,6 +22,7 @@
     "dotenv": "^16.4.7",
     "drizzle-orm": "^0.39.3",
     "express": "^4.21.2",
+    "winston": "^3.17.0",
     "zod": "^3.24.2"
   },
   "devDependencies": {

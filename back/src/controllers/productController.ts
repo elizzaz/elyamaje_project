@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import * as productService from "../services/productService";
-import { logger } from '../utils/logger';
+import logger from '../utils/logger'
 import { AppError } from '../utils/errors';
 
 /**
@@ -12,8 +12,20 @@ import { AppError } from '../utils/errors';
 
 /**
  * GET /products
- * Retrieves all products
- * @returns Array of products with prices in dollars
+ * Retrieves a paginated list of products.
+ * 
+ * @queryParam {number} [page=1] - The page number for pagination.
+ * @queryParam {number} [limit=10] - The number of products per page.
+ * 
+ * @returns {Object} A paginated list of products with metadata.
+ * @returns {Array} products - List of products with prices in dollars.
+ * @returns {Object} metadata - Pagination details.
+ * @returns {number} metadata.currentPage - The current page number.
+ * @returns {number} metadata.totalPages - The total number of pages.
+ * @returns {number} metadata.totalItems - The total number of products.
+ * @returns {number} metadata.itemsPerPage - The number of products per page.
+ * 
+ * @throws {Error} If an error occurs while retrieving the products.
  */
 export const getAllProducts = async (
   req: Request,
@@ -21,16 +33,27 @@ export const getAllProducts = async (
   next: NextFunction
 ) => {
   try {
-    logger.info('Fetching all products');
-    const products = await productService.getAllProducts();
+    const page = parseInt(req.query.page as string) || 1;
+    const limit = parseInt(req.query.limit as string) || 10;
+
+    logger.info('Fetching products with pagination', { 
+      page,
+      limit,
+      requestPath: req.path 
+    });
+
+    const result = await productService.getAllProducts({ page, limit });
     
     logger.info('Products retrieved successfully', { 
-      count: products.length,
+      currentPage: result.metadata.currentPage,
+      totalPages: result.metadata.totalPages,
+      totalItems: result.metadata.totalItems,
+      itemsPerPage: result.metadata.itemsPerPage
     });
     
-    res.json(products);
+    res.json(result);
   } catch (error) {
-    logger.error('Error retrieving all products', { 
+    logger.error('Error retrieving products', { 
       error,
       requestPath: req.path 
     });

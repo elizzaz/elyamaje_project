@@ -25,8 +25,10 @@ export const createProductSchema = z.object({
     .int("Stock must be an integer")
     .min(0, "Stock cannot be negative"),
   image: z.string()
-    .url("Invalid image URL")
-    .optional(),
+    .optional().refine(value => !value || /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w.-]*)*\/?$/.test(value), {
+      message: "Invalid image URL",
+    })
+    .nullable(),
 });
 
 /**
@@ -47,8 +49,10 @@ export const updateProductSchema = z.object({
     .min(0, "Stock cannot be negative")
     .optional(),
   image: z.string()
-    .url("Invalid image URL")
-    .optional(),
+  .optional().refine(value => !value || /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w.-]*)*\/?$/.test(value), {
+    message: "Invalid image URL",
+  })
+    .nullable(),
 });
 
 // Types dérivés des schémas pour TypeScript

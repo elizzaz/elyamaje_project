@@ -2,7 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import productRoutes from "./routes/productRoutes";
 import { errorMiddleware } from './utils/errorMiddleware';
-import { logger } from './utils/logger';
+import logger from './utils/logger'
 
 const app = express();
 const port = process.env.PORT || 3000;
