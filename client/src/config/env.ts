@@ -1,9 +1,8 @@
-if (!process.env.API_URL) {
-  throw new Error('API_URL environment variable is not defined')
-}
-
 export const env = {
   api: {
-    url: process.env.API_URL,
+    url: process.env.API_URL || "http://localhost:3000", // Utilisé côté serveur
   },
-} as const 
+  client: {
+    url: process.env.NEXT_PUBLIC_API_URL || "http://localhost:3000", // Utilisé côté client
+  },
+} as const;

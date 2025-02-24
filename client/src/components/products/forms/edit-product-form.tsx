@@ -120,7 +120,7 @@ export function EditProductForm({ productId }: EditProductFormProps) {
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="image">URL de l'image</Label>
+          <Label htmlFor="image">URL image</Label>
           <Input 
             id="image" 
             name="image" 

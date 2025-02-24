@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { Header } from "@/components/header/header"
+import { Header } from "@/components/header/header-table"
 import { ProductsTable } from "@/components/products/table/products-table"    
 
 export const metadata: Metadata = {

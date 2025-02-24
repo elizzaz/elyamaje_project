@@ -1,5 +1,8 @@
 import { z } from 'zod';
 
+// Regex to validate an URL
+const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[a-zA-Z0-9\-._~:/?#[\]@!$&'()*+,;%=]*)?$/;
+
 /**
  * Base schema for product price validation
  * Ensures price is a valid dollar amount with 2 decimal places
@@ -25,7 +28,7 @@ export const createProductSchema = z.object({
     .int("Stock must be an integer")
     .min(0, "Stock cannot be negative"),
   image: z.string()
-    .optional().refine(value => !value || /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w.-]*)*\/?$/.test(value), {
+    .optional().refine(value => !value || urlRegex.test(value), {
       message: "Invalid image URL",
     })
     .nullable(),
@@ -49,7 +52,7 @@ export const updateProductSchema = z.object({
     .min(0, "Stock cannot be negative")
     .optional(),
   image: z.string()
-  .optional().refine(value => !value || /^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w.-]*)*\/?$/.test(value), {
+  .optional().refine(value => !value || urlRegex.test(value), {
     message: "Invalid image URL",
   })
     .nullable(),

@@ -7,7 +7,7 @@ import {
   CreateProductInput, 
   UpdateProductInput, 
 } from '@/types/product'
-import { ApiResponse, ApiError } from '@/types/api'
+import { ApiResponse, ApiError, PaginatedResponse } from '@/types/api'
 
 export const productKeys = {
   all: ['products'] as const,
@@ -17,12 +17,14 @@ export const productKeys = {
 
 /**
  * Hook pour récupérer la liste des produits
- * @returns {UseQueryResult<Product[], ApiError>} Query result contenant les produits ou une erreur
+ * @param {number} page - Numéro de la page
+ * @param {number} limit - Nombre d'éléments par page
+ * @returns {UseQueryResult<PaginatedResponse<Product>, ApiError>} Query result contenant les produits paginés
  */
-export function useProducts() {
-  return useQuery<Product[], ApiError>({
-    queryKey: productKeys.lists(),
-    queryFn: getProducts
+export function useProducts(page: number = 1, limit: number = 10) {
+  return useQuery<PaginatedResponse<Product>, ApiError>({
+    queryKey: [...productKeys.lists(), { page, limit }],
+    queryFn: () => getProducts(page, limit)
   })
 }
 

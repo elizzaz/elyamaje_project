@@ -84,11 +84,12 @@ export function CreateProductForm() {
             name="stock" 
             type="number" 
             min="0" 
+            defaultValue={0}
             required 
           />
         </div>
         <div className="space-y-2">
-          <Label htmlFor="image">URL de l'image</Label>
+          <Label htmlFor="image">URL image</Label>
           <Input 
             id="image" 
             name="image" 

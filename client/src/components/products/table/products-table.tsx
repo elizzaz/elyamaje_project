@@ -1,11 +1,21 @@
 'use client'
 
+import { useState } from "react"
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
 import { Card } from "@/components/ui/card"
 import { useProducts } from "@/hooks/useProducts"
 import { ViewProductButton } from "@/components/products/buttons/view-product-button"
 import { EditProductButton } from "@/components/products/buttons/edit-product-button"
 import { DeleteProductButton } from "@/components/products/buttons/delete-product-button"
+import { 
+  Pagination, 
+  PaginationContent, 
+  PaginationItem, 
+  PaginationNext, 
+  PaginationPrevious 
+} from "@/components/ui/pagination"
+
+const ITEMS_PER_PAGE = 10
 
 /**
  * Table listant tous les produits
@@ -13,7 +23,8 @@ import { DeleteProductButton } from "@/components/products/buttons/delete-produc
  * @returns {JSX.Element} Table avec la liste des produits et leurs actions
  */
 export function ProductsTable() {
-  const { data: products, isLoading, error } = useProducts()
+  const [currentPage, setCurrentPage] = useState(1)
+  const { data, isLoading, error } = useProducts(currentPage, ITEMS_PER_PAGE)
 
   if (isLoading) {
     return (
@@ -52,7 +63,7 @@ export function ProductsTable() {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {products?.map((product) => (
+          {data?.data?.map((product) => (
             <TableRow key={product.id}>
               <TableCell>{product.name}</TableCell>
               <TableCell>{product.price}€</TableCell>
@@ -71,6 +82,45 @@ export function ProductsTable() {
           ))}
         </TableBody>
       </Table>
+      
+      {data && data.metadata && (
+        <div className="p-6 flex items-center justify-between">
+          <div className="text-sm text-muted-foreground">
+            {data.metadata.totalItems} produits au total
+          </div>
+          <Pagination>
+            <PaginationContent>
+              <PaginationItem>
+                <PaginationPrevious 
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (currentPage > 1) setCurrentPage(currentPage - 1)
+                  }}
+                  aria-disabled={currentPage <= 1}
+                />
+              </PaginationItem>
+              <PaginationItem>
+                <span className="text-sm">
+                  Page {data.metadata.currentPage} sur {data.metadata.totalPages}
+                </span>
+              </PaginationItem>
+              <PaginationItem>
+                <PaginationNext 
+                  href="#"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    if (currentPage < data.metadata.totalPages) {
+                      setCurrentPage(currentPage + 1)
+                    }
+                  }}
+                  aria-disabled={currentPage >= data.metadata.totalPages}
+                />
+              </PaginationItem>
+            </PaginationContent>
+          </Pagination>
+        </div>
+      )}
     </Card>
   )
 }
