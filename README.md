@@ -34,7 +34,9 @@ Une application full-stack de gestion de produits avec une API RESTful robuste e
 - Zod
 
 ### Frontend
-- Next.js 14
+
+- Next.js 15
+- React 19
 - React Query (TanStack Query)
 - Tailwind CSS
 - Shadcn/ui
@@ -72,6 +74,27 @@ touch .env
 
 Ajouter l'url postgres dans le fichier .env:
 
+Concernant la base de données, plusieurs solutions sont possibles:
+- Utiliser une base de données locale (PostgreSQL)
+- Utiliser une base de données distante (Neon, Supabase, etc…) (recommandé)
+- Utiliser une base de données dans un conteneur Docker (PostgreSQL)
+
+Un fichier docker-compose.yml est disponible pour lancer une base de données PostgreSQL localement via Docker via la commande: 
+
+```bash
+docker-compose up -d
+```
+
+L'url de la base de données sera alors:
+
+```bash
+DATABASE_URL=postgres://postgres:postgres@localhost:5432/main
+PORT=3000
+```
+
+
+Quel que soit la solution choisie, il faut ajouter l'url de la base de données dans le fichier .env:
+
 ```bash
 DATABASE_URL=postgres://user:password@localhost:5432/db_name
 PORT=3000
@@ -96,6 +119,18 @@ Ajouter l'url d'api dans le fichier .env:
 ```bash 
 NEXT_PUBLIC_API_URL=http://localhost:3000
 ```
+
+### 6. Lancer le projet en dev:
+
+À la racine du projet lancer la commande:
+
+⁠```bash
+pnpm dev
+⁠```
+
+Le serveur backend sera lancé sur le port 3000 et le frontend sur le port 3001: 
+•⁠  ⁠http://localhost:3000 # backend
+•⁠  ⁠http://localhost:3001 # frontend
 
 ## 🚀 Scripts Disponibles
 
