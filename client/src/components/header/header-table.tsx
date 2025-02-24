@@ -1,8 +1,8 @@
-'use client'
+"use client";
 
-import { AddProductButton } from "@/components/products/buttons/add-product-button"
+import { AddProductButton } from "@/components/products/buttons/add-product-button";
 interface HeaderProps {
-  title: string
+  title: string;
 }
 
 export function Header({ title }: HeaderProps) {
@@ -11,5 +11,5 @@ export function Header({ title }: HeaderProps) {
       <h2 className="text-3xl font-bold tracking-tight">{title}</h2>
       <AddProductButton />
     </div>
-  )
+  );
 }

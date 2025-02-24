@@ -6,7 +6,7 @@ import { AppError } from '../utils/errors';
 /**
  * Product Controller
  * Handles HTTP requests for product operations
- * All prices in requests/responses are in dollars
+ * All prices in requests/responses are in euros
  * Internal storage uses cents
  */
 
@@ -18,7 +18,7 @@ import { AppError } from '../utils/errors';
  * @queryParam {number} [limit=10] - The number of products per page.
  * 
  * @returns {Object} A paginated list of products with metadata.
- * @returns {Array} products - List of products with prices in dollars.
+ * @returns {Array} products - List of products with prices in euros.
  * @returns {Object} metadata - Pagination details.
  * @returns {number} metadata.currentPage - The current page number.
  * @returns {number} metadata.totalPages - The total number of pages.
@@ -65,7 +65,7 @@ export const getAllProducts = async (
  * GET /products/:id
  * Retrieves a single product by ID
  * @param req.params.id - Product ID
- * @returns Single product with price in dollars
+ * @returns Single product with price in euros
  * @throws 400 if ID is invalid
  * @throws 404 if product not found
  */
@@ -98,7 +98,7 @@ export const getProductById = async (
 /**
  * POST /products
  * Creates a new product
- * @param req.body - Product data with price in dollars
+ * @param req.body - Product data with price in euros
  * @returns Created product with 201 status
  * @throws 400 if validation fails
  */

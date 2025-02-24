@@ -5,7 +5,7 @@ const urlRegex = /^(https?:\/\/)?([a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}(\/[a-zA-Z0-9\-.
 
 /**
  * Base schema for product price validation
- * Ensures price is a valid dollar amount with 2 decimal places
+ * Ensures price is a valid euros amount with 2 decimal places
  */
 const priceSchema = z.number()
   .positive("Price must be positive")

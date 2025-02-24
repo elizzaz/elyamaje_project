@@ -10,7 +10,7 @@ Une application full-stack de gestion de produits avec une API RESTful robuste e
 - Validation des données avec Zod
 - Gestion des erreurs centralisée
 - Logging des opérations
-- Gestion des prix en centimes (stockage) avec conversion en dollars (API)
+- Gestion des prix en centimes (stockage) avec conversion en euros (API)
 - Architecture en couches
 
 ### Frontend

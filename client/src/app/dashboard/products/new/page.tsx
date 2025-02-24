@@ -1,10 +1,9 @@
-import { Metadata } from 'next'
-import { CreateProductForm } from '@/components/products/forms/create-product-form'
+import { Metadata } from "next";
+import { CreateProductForm } from "@/components/products/forms/create-product-form";
 
 export const metadata: Metadata = {
-  title: 'Créer un Produit',
-  description: 'Ajouter un nouveau produit au catalogue',
-}
+  title: "Créer un Produit",
+};
 
 export default function NewProductPage() {
   return (
@@ -12,5 +11,5 @@ export default function NewProductPage() {
       <h1 className="text-3xl font-bold">Créer un Produit</h1>
       <CreateProductForm />
     </div>
-  )
-} 
+  );
+}

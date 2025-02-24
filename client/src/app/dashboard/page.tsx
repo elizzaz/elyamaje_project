@@ -3,8 +3,7 @@ import { Header } from "@/components/header/header-table"
 import { ProductsTable } from "@/components/products/table/products-table"    
 
 export const metadata: Metadata = {
-  title: "Dashboard | Vue d'ensemble",
-  description: "Vue d'ensemble des produits",
+  title: "Dashboard | Vue d'ensemble"
 }
 
 export default async function DashboardPage(props: {

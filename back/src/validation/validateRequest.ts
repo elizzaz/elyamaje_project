@@ -4,7 +4,7 @@ import logger from '../utils/logger'
 /**
  * Request Validation Middleware
  * Validates incoming request body against a Zod schema
- * For products, ensures prices are valid dollar amounts before conversion to cents
+ * For products, ensures prices are valid euro amounts before conversion to cents
  * @param schema - Zod schema to validate against
  */
 export const validateRequest = (schema: AnyZodObject) => {

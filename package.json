@@ -1,15 +1,15 @@
 {
-    "name": "product",
-    "version": "1.0.0",
-    "description": "Product dashboardmanagement application with Next/react frontend and Node/Express backend",
-    "scripts": {
-      "back": "cd back && pnpm run dev",
-      "client": "cd client && pnpm run dev",
-      "dev": "concurrently \"pnpm run back\" \"pnpm run client\"",
-      "install-all": "pnpm install && cd client && pnpm install && cd ../back && pnpm install",
-      "init-db": "cd back && pnpm migrate && pnpm seed"
-    },
-    "devDependencies": {
-      "concurrently": "^8.2.2"
-    }
+  "name": "product",
+  "version": "1.0.0",
+  "description": "Product dashboardmanagement application with Next/react frontend and Node/Express backend",
+  "scripts": {
+    "back": "cd back && pnpm run dev",
+    "client": "cd client && pnpm run dev",
+    "dev": "concurrently \"pnpm run back\" \"pnpm run client\"",
+    "install-all": "pnpm install && cd client && pnpm install && cd ../back && pnpm install",
+    "init-db": "cd back && pnpm migrate && pnpm seed"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
+}

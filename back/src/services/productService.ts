@@ -1,18 +1,13 @@
 import "dotenv/config";
-import { drizzle } from "drizzle-orm/neon-http";
 import { eq, sql } from "drizzle-orm";
 import { productsTable } from "../db/schema";
 import { InferInsertModel, InferSelectModel } from "drizzle-orm";
 import { AppError } from '../utils/errors';
 import logger from '../utils/logger'
-import { toCents, toDollars } from '../utils/price';
+import { toCents, toEuros } from '../utils/price';
 import { z } from 'zod';
 import { createProductSchema, updateProductSchema } from '../validation/productSchema';
-
-/**
- * Database connection instance
- */
-const db = drizzle(process.env.DATABASE_URL!);
+import { db } from '../db';
 
 /**
  * Types for TypeScript
@@ -45,7 +40,7 @@ interface PaginatedResponse<T> {
  * @queryParam {number} [limit=10] - The number of products per page.
  * 
  * @returns {Object} A paginated list of products with metadata.
- * @returns {Array} products - List of products with prices in dollars.
+ * @returns {Array} products - List of products with prices in euros.
  * @returns {Object} metadata - Pagination details.
  * @returns {number} metadata.currentPage - The current page number.
  * @returns {number} metadata.totalPages - The total number of pages.
@@ -74,7 +69,7 @@ export const getAllProducts = async ({ page = 1, limit = 10 }: PaginationParams 
 
     const data = productsData.map(product => ({
       ...product,
-      price: toDollars(product.price),
+      price: toEuros(product.price),
     }))
 
     logger.info(`Retrieved ${data.length} products (page ${page}/${totalPages})`)
@@ -97,7 +92,7 @@ export const getAllProducts = async ({ page = 1, limit = 10 }: PaginationParams 
 /**
  * Retrieves a single product by its ID
  * @param id - The product ID to retrieve
- * @returns Promise<Product> Product with price in dollars
+ * @returns Promise<Product> Product with price in euros
  * @throws AppError(404) if product not found
  */
 export const getProductById = async (id: number): Promise<Product> => {
@@ -112,14 +107,14 @@ export const getProductById = async (id: number): Promise<Product> => {
 
   return {
     ...product[0],
-    price: toDollars(product[0].price),
+    price: toEuros(product[0].price),
   };
 };
 
 /**
  * Creates a new product in the database
- * @param product - Product data with price in dollars
- * @returns Promise<Product> Created product with price in dollars
+ * @param product - Product data with price in euros
+ * @returns Promise<Product> Created product with price in euros
  * @throws AppError(400) if validation fails
  */
 export const createProduct = async (product: unknown): Promise<Product> => {
@@ -136,7 +131,7 @@ export const createProduct = async (product: unknown): Promise<Product> => {
     
     return {
       ...newProduct,
-      price: toDollars(newProduct.price),
+      price: toEuros(newProduct.price),
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -151,7 +146,7 @@ export const createProduct = async (product: unknown): Promise<Product> => {
  * Updates an existing product
  * @param id - ID of the product to update
  * @param productData - Updated product data
- * @returns Promise<Product> Updated product with price in dollars
+ * @returns Promise<Product> Updated product with price in euros
  * @throws AppError(400) if validation fails
  * @throws AppError(404) if product not found
  */
@@ -179,7 +174,7 @@ export const updateProduct = async (id: number, productData: unknown): Promise<P
 
     return {
       ...updatedProduct,
-      price: toDollars(updatedProduct.price),
+      price: toEuros(updatedProduct.price),
     };
   } catch (error) {
     if (error instanceof z.ZodError) {
@@ -194,7 +189,7 @@ export const updateProduct = async (id: number, productData: unknown): Promise<P
 /**
  * Deletes a product from the database
  * @param id - ID of the product to delete
- * @returns Promise<Product> Deleted product with price in dollars
+ * @returns Promise<Product> Deleted product with price in euros
  * @throws AppError(404) if product not found
  */
 export const deleteProduct = async (id: number): Promise<Product> => {

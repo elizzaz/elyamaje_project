@@ -1,11 +1,12 @@
-'use client'
+"use client";
 
-import { Card } from "@/components/ui/card"
-import { useProduct } from "@/hooks/useProducts"
-import { notFound } from 'next/navigation'
+import { Card } from "@/components/ui/card";
+import { useProduct } from "@/hooks/useProduct";
+import { notFound } from "next/navigation";
+import Image from "next/image";
 
 interface ProductDetailsProps {
-  productId: number
+  productId: number;
 }
 
 /**
@@ -16,7 +17,7 @@ interface ProductDetailsProps {
  * @returns {JSX.Element} Card avec les détails du produit
  */
 export function ProductDetails({ productId }: ProductDetailsProps) {
-  const { data: product, isLoading, error } = useProduct(productId)
+  const { data: product, isLoading, error } = useProduct(productId);
 
   if (isLoading) {
     return (
@@ -27,11 +28,11 @@ export function ProductDetails({ productId }: ProductDetailsProps) {
           <div className="h-4 bg-muted animate-pulse rounded w-1/3" />
         </div>
       </Card>
-    )
+    );
   }
 
   if (error || !product) {
-    notFound()
+    notFound();
   }
 
   return (
@@ -40,7 +41,7 @@ export function ProductDetails({ productId }: ProductDetailsProps) {
         <div>
           <h2 className="text-2xl font-bold">{product.name}</h2>
           <p className="text-muted-foreground mt-2">
-            {product.description || 'Aucune description'}
+            {product.description || "Aucune description"}
           </p>
         </div>
 
@@ -51,7 +52,9 @@ export function ProductDetails({ productId }: ProductDetailsProps) {
           </div>
           <div>
             <h3 className="font-semibold mb-2">Stock</h3>
-            <p className={`text-2xl font-bold ${product.stock === 0 ? 'text-red-500' : ''}`}>
+            <p
+              className={`text-2xl font-bold ${product.stock === 0 ? "text-red-500" : ""}`}
+            >
               {product.stock} unités
             </p>
           </div>
@@ -60,14 +63,16 @@ export function ProductDetails({ productId }: ProductDetailsProps) {
         {product.image && (
           <div>
             <h3 className="font-semibold mb-2">Image</h3>
-            <img 
-              src={product.image} 
+            <Image
+              src={product.image}
               alt={product.name}
               className="rounded-lg max-w-sm"
+              width={100}
+              height={100}
             />
           </div>
         )}
       </div>
     </Card>
-  )
-} 
+  );
+}

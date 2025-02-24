@@ -1,4 +1,3 @@
-// Types de base pour les produits
 export interface Product {
   id: number;
   name: string;
@@ -8,7 +7,6 @@ export interface Product {
   image?: string;
 }
 
-// DTOs (Data Transfer Objects)
 export interface CreateProductInput {
   name: string;
   description?: string;

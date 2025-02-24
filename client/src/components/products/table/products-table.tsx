@@ -1,21 +1,28 @@
-'use client'
+"use client";
 
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "@/components/ui/table"
-import { Card } from "@/components/ui/card"
-import { useProducts } from "@/hooks/useProducts"
-import { ViewProductButton } from "@/components/products/buttons/view-product-button"
-import { EditProductButton } from "@/components/products/buttons/edit-product-button"
-import { DeleteProductButton } from "@/components/products/buttons/delete-product-button"
-import { 
-  Pagination, 
-  PaginationContent, 
-  PaginationItem, 
-  PaginationNext, 
-  PaginationPrevious 
-} from "@/components/ui/pagination"
-import { useRouter } from "next/navigation"
+import {
+  Table,
+  TableHeader,
+  TableRow,
+  TableHead,
+  TableBody,
+  TableCell,
+} from "@/components/ui/table";
+import { Card } from "@/components/ui/card";
+import { useProducts } from "@/hooks/useProducts";
+import { ViewProductButton } from "@/components/products/buttons/view-product-button";
+import { EditProductButton } from "@/components/products/buttons/edit-product-button";
+import { DeleteProductButton } from "@/components/products/buttons/delete-product-button";
+import {
+  Pagination,
+  PaginationContent,
+  PaginationItem,
+  PaginationNext,
+  PaginationPrevious,
+} from "@/components/ui/pagination";
+import { useRouter } from "next/navigation";
 
-const ITEMS_PER_PAGE = 10
+const ITEMS_PER_PAGE = 10;
 
 /**
  * Table listant tous les produits
@@ -23,12 +30,12 @@ const ITEMS_PER_PAGE = 10
  * @returns {JSX.Element} Table avec la liste des produits et leurs actions
  */
 export function ProductsTable({ currentPage }: { currentPage: number }) {
-  const { data, isLoading, error } = useProducts(currentPage, ITEMS_PER_PAGE)
+  const { data, isLoading, error } = useProducts(currentPage, ITEMS_PER_PAGE);
   const { replace } = useRouter();
 
   const updateCurrentPage = (page: number) => {
-    replace(`/dashboard?page=${page}`)
-  }
+    replace(`/dashboard?page=${page}`);
+  };
 
   if (isLoading) {
     return (
@@ -37,7 +44,7 @@ export function ProductsTable({ currentPage }: { currentPage: number }) {
           <h3 className="text-lg font-medium">Chargement des produits...</h3>
         </div>
       </Card>
-    )
+    );
   }
 
   if (error) {
@@ -45,11 +52,11 @@ export function ProductsTable({ currentPage }: { currentPage: number }) {
       <Card className="mt-6">
         <div className="p-6">
           <h3 className="text-lg font-medium text-red-500">
-            {error.message || 'Erreur lors du chargement des produits'}
+            {error.message || "Erreur lors du chargement des produits"}
           </h3>
         </div>
       </Card>
-    )
+    );
   }
 
   return (
@@ -76,7 +83,7 @@ export function ProductsTable({ currentPage }: { currentPage: number }) {
                 <div className="flex justify-end gap-2">
                   <ViewProductButton productId={product.id} />
                   <EditProductButton productId={product.id} />
-                  <DeleteProductButton 
+                  <DeleteProductButton
                     productId={product.id}
                     productName={product.name}
                   />
@@ -86,7 +93,7 @@ export function ProductsTable({ currentPage }: { currentPage: number }) {
           ))}
         </TableBody>
       </Table>
-      
+
       {data && data.metadata && (
         <div className="p-6 flex items-center justify-between">
           <div className="text-sm text-muted-foreground">
@@ -95,27 +102,28 @@ export function ProductsTable({ currentPage }: { currentPage: number }) {
           <Pagination>
             <PaginationContent>
               <PaginationItem>
-                <PaginationPrevious 
+                <PaginationPrevious
                   href="#"
                   onClick={(e) => {
-                    e.preventDefault()
-                    if (currentPage > 1) updateCurrentPage(currentPage - 1)
+                    e.preventDefault();
+                    if (currentPage > 1) updateCurrentPage(currentPage - 1);
                   }}
                   aria-disabled={currentPage <= 1}
                 />
               </PaginationItem>
               <PaginationItem>
                 <span className="text-sm">
-                  Page {data.metadata.currentPage} sur {data.metadata.totalPages}
+                  Page {data.metadata.currentPage} sur{" "}
+                  {data.metadata.totalPages}
                 </span>
               </PaginationItem>
               <PaginationItem>
-                <PaginationNext 
+                <PaginationNext
                   href="#"
                   onClick={(e) => {
-                    e.preventDefault()
+                    e.preventDefault();
                     if (currentPage < data.metadata.totalPages) {
-                      updateCurrentPage(currentPage + 1)
+                      updateCurrentPage(currentPage + 1);
                     }
                   }}
                   aria-disabled={currentPage >= data.metadata.totalPages}
@@ -126,5 +134,5 @@ export function ProductsTable({ currentPage }: { currentPage: number }) {
         </div>
       )}
     </Card>
-  )
+  );
 }
