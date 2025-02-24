@@ -53,7 +53,7 @@ Une application full-stack de gestion de produits avec une API RESTful robuste e
 ### 2. Cloner le repository
 
 ```bash
-git clone git@github.com:elizzaz/elyamaje_project.git
+git clone https://github.com/elizzaz/elyamaje_project.git
 cd elyamaje_project
 ```
 
@@ -129,7 +129,7 @@ pnpm lint # Vérifie le code
 | PUT | `/products/:id` | Met à jour un produit |
 | DELETE | `/products/:id` | Supprime un produit |
 
-La collection postman pour les endpoints est disponible dans le fichier `postman.collection.json`.
+La collection postman pour les endpoints est disponible dans le fichier `postman_collection.json`.
 
 ### Format des données attendues
 
