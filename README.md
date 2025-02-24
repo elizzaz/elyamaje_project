@@ -53,8 +53,8 @@ Une application full-stack de gestion de produits avec une API RESTful robuste e
 ### 2. Cloner le repository
 
 ```bash
-git clone <url-du-repo>
-cd <nom-du-projet>
+git clone git@github.com:elizzaz/elyamaje_project.git
+cd elyamaje_project
 ```
 
 ### 3. Installation des dépendances:
