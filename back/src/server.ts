@@ -20,6 +20,10 @@ app.use((req, res, next) => {
   next();
 });
 
+app.get("/", (req, res) => {
+  res.json({ message: "Product API is running" });
+});
+
 app.use("/products", productRoutes);
 
 app.use(errorMiddleware);
