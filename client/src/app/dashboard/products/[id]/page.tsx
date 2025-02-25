@@ -2,13 +2,10 @@ import { EditProductButton } from "@/components/products/buttons/edit-product-bu
 import { DeleteProductButton } from "@/components/products/buttons/delete-product-button";
 import { ProductDetails } from "@/components/products/details/product-details";
 
-interface ProductPageProps {
-  params: {
-    id: string;
-  };
-}
 
-export default function ProductPage({ params }: ProductPageProps) {
+
+export default async function ProductPage(props: { params: Promise<{ id: string }> }) {
+const params = await props.params;
   return (
     <div className="flex flex-col gap-6">
       <div className="flex justify-between items-center">
