@@ -62,7 +62,7 @@ cd elyamaje_project
 ### 3. Installation des dépendances:
 
 ```bash
-pnpm install-all
+pnpm multi install
 ```
 
 ### 4. Configurer la base de données:
@@ -103,7 +103,7 @@ PORT=3000
 Puis lancer la commande pour initialiser la base de données:
 
 ```bash
-pnpm init-db
+cd back && pnpm migrate && pnpm seed
 ```
 
 ### 5. Configurer l'url d'api côté frontend :
@@ -124,9 +124,9 @@ NEXT_PUBLIC_API_URL=http://localhost:3000
 
 À la racine du projet lancer la commande:
 
-⁠```bash
-pnpm dev
-⁠```
+```bash 
+pnpm multi run dev
+```
 
 Le serveur backend sera lancé sur le port 3000 et le frontend sur le port 3001: 
 •⁠  ⁠http://localhost:3000 # backend
@@ -198,8 +198,9 @@ La collection postman pour les endpoints est disponible dans le fichier `postman
 │ │ ├── hooks/ # Hooks personnalisés
 │ │ └── lib/ # Utilitaires
 │ └── public/ # Assets statiques
-└── package.json # Scripts globaux
-└── README.md
+└── postman_collection.json # Collection Postman
+└── docker-compose.yml # Docker Compose Optionnel pour Postgres
+└── README.md # Documentation
 ```
 
 
@@ -209,4 +210,6 @@ La collection postman pour les endpoints est disponible dans le fichier `postman
 - Ajout de tests unitaires
 - Messages d'erreurs par champs dans les formulaires
 - Ajout d'un système d'authentification
+- Logging — utiliser un service comme posthog pour un suivi approfondi des logs
+- Internationalisation (i18n) pour gérer plusieurs langues et améliorer l’accessibilité
 - ...
